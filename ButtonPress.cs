@@ -67,39 +67,39 @@ public class ButtonPress : MonoBehaviour
             breathingCanvas.transform.rotation = Quaternion.Euler(rote);
             // All of that just so it smoothly follows you and is rotated the correct way... !!!
             // Now to make it go up and down and say breathe in and exhale.... 
-            if (goingdown != true)
+            if (goingdown != true) // If you aren't exhaling...
             {
                 breathingSlider.value += Time.deltaTime;
                 breathingFillarea.GetComponent<Image>().color = new Color(0, 255, 0);
                 breathingText.text = "Inhale";
                 breathingText.GetComponent<Text>().color = new Color(255, 150, 0);
-                if (breathingSlider.value == 5)
+                if (breathingSlider.value == 5) // when slider at full, start the hold
                 {
                     holdtimer += Time.deltaTime;
                     breathingText.GetComponent<Text>().color = new Color(255, 0, 0);
                     breathingText.text = "Hold!";
                     breathingFillarea.GetComponent<Image>().color = new Color(255, 0, 0);
-                    if (holdtimer > 3f && breathingSlider.value == 5)
+
+                    if (holdtimer > 3f && breathingSlider.value == 5) // If done holding breath,tell program to exhale.
                     {
                         goingdown = true;
                     }
                 }
             }
-            if (goingdown == true)
+
+            if (goingdown == true) // If Exhaling
             {
                 breathingSlider.value -= Time.deltaTime * 1.5f;
                 breathingFillarea.GetComponent<Image>().color = new Color(255, 150, 0);
                 breathingText.text = "Exhale";
                 breathingText.GetComponent<Text>().color = new Color(0, 255, 0);
                 holdtimer = 0f;
-                if (breathingSlider.value == 0)
+                if (breathingSlider.value == 0) // Once slider is at 0, tell program youre done exhaling and to inhale again.
                 {
                     goingdown = false;
                 }
                 
             }
-
-
         }
 
         if (Physics.Raycast(ray, out hit))
